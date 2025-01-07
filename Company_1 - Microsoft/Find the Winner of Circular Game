@@ -1,0 +1,51 @@
+#include<iostream>
+#include<stdio.h>
+#include<queue>
+using namespace std ;
+//Brute force approach
+/*
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        vector<int>circle ;
+        for(int i = 1 ; i <= n ; i++){
+            circle.push_back(i) ; //initialise list with n friends
+        }
+
+        int startFriend = 0 ;//start indexing the first friend as 0
+
+        while(circle.size() > 1){//iterate till there are atleast 2 friends remaining in the circle
+            int removeFriend = (startFriend + k - 1) % circle.size() ;//formula to remove the kth friend starting from 1st friend
+            circle.erase(circle.begin() + removeFriend) ;//to erase the removeFriend's value
+            startFriend = removeFriend ;//Start from the next friend
+        }
+        return circle.front() ;//return the last remaining friend
+    }
+}; 
+*/
+//The Queue Approach
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        queue<int> circle;
+        for (int i = 1; i <= n; i++) {
+            circle.push(i);
+        }
+        while (circle.size() > 1) {
+            for (int i = 0; i < k - 1; i++) {// Process the first k-1 friends without eliminating them
+                circle.push(circle.front());
+                circle.pop();
+            }
+            // Eliminate the k-th friend
+            circle.pop();
+        }
+
+        return circle.front();
+    }
+};
+
+int main(){
+  Solution survivor ;
+  cout << survivor.findTheWinner(5 , 2) ;
+  return 0 ;
+}
