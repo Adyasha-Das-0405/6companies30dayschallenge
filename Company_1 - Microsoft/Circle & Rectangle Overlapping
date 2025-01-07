@@ -1,0 +1,19 @@
+#include<iostream>
+#include<stdio.h>
+using namespace std ;
+
+class Solution {
+public:
+    bool checkOverlap(int radius, int xCenter, int yCenter, int x1, int y1, int x2, int y2) {
+        int closerX = max(x1 , min(xCenter , x2)) ;//to find the nearest point which should lie between x1 and x2 which is nearer to xCenter
+        int closerY = max(y1 , min(yCenter , y2)) ;//to find the nearest point which should lie between y1 and y2 which is nearer to yCenter
+        int distance = ((xCenter - closerX) * (xCenter - closerX)) + ((yCenter - closerY) * (yCenter - closerY)) ;
+        return (distance <= radius * radius) ;// if distance <= (radius)^2 then the circle and the square overlap!
+    }
+};
+
+int main() {
+    Solution point;
+    cout << point.checkOverlap(1, 0, 0, 1, -1, 3, 1);
+    return 0;
+}
