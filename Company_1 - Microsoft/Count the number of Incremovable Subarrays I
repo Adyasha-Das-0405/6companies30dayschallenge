@@ -1,0 +1,57 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+class Solution {
+public:
+    int incremovableSubarrayCount(vector<int>& nums) {
+        int ans = 0;
+        int n = nums.size();
+        
+        // Outer loop for the start index of the subarray
+        for (int i = 0; i < n; i++) {
+            // Inner loop for the end index of the subarray
+            for (int j = i; j < n; j++) {
+                bool ok = true;
+                int lst = -1;
+                
+                // Loop to check each element outside the subarray
+                for (int k = 0; k < n; k++) {
+                    if (k >= i && k <= j) {
+                        continue;  // Skip elements within the subarray
+                    }
+                    if (lst == -1) {
+                        lst = nums[k];  // Initialize lst with first element
+                    } else {
+                        if (nums[k] <= lst) {  // Check if sequence is not strictly increasing
+                            ok = false;
+                            break;
+                        }
+                        lst = nums[k];
+                    }
+                }
+                
+                ans += ok;
+            }
+        }
+        return ans;
+    }
+};
+
+int main() {
+    Solution solution;
+    
+    // Test case 1
+    vector<int> nums1 = {1, 2, 3, 4};
+    cout << "Test case 1 result: " << solution.incremovableSubarrayCount(nums1) << endl;
+    
+    // Test case 2
+    vector<int> nums2 = {6, 5, 7, 8};
+    cout << "Test case 2 result: " << solution.incremovableSubarrayCount(nums2) << endl;
+    
+    // Test case 3
+    vector<int> nums3 = {8, 7, 6, 6};
+    cout << "Test case 3 result: " << solution.incremovableSubarrayCount(nums3) << endl;
+    
+    return 0;
+}
